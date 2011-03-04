@@ -1,7 +1,7 @@
 --- #YAML:1.0
 name:               Triggermail
-version:            0.03
-abstract:           ~
+version:            1.00
+abstract:           Perl module for accessing SailThru's platform
 author:
     - Sam Gerstenzang <sgerstenzang@stanford.edu>
 license:            unknown
