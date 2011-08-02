@@ -1,7 +1,7 @@
 Changes
+lib/Triggermail.pm
 Makefile.PL
-MANIFEST
+MANIFEST			This list of files
 README
 t/Triggermail.t
-lib/Triggermail.pm
 META.yml                                 Module meta-data (added by MakeMaker)
