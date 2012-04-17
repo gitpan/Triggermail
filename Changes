@@ -1,5 +1,8 @@
 Revision history for Perl extension Triggermail.
 
+1.004 Tue Apr 17 12:36:37 2012
+	- Deprecation warning in documentation to prefer Sailthru::Client.
+
 1.003 Mon Aug  2 11:54:01 2011
 	- Use https to connect to Sailthru API instead of http.
 

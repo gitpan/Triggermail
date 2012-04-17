@@ -1,6 +1,6 @@
 package Triggermail;
 
-our $VERSION = '1.003';
+our $VERSION = '1.004';
 
 use strict;
 use warnings;
@@ -236,17 +236,36 @@ __END__
 
 =head1 NAME
 
+XXX THIS MODULE IS NOW DEPRECATED.
+
+XXX Use the Sailthru::Client module instead.
+
 Triggermail - Perl module for accessing SailThru's platform
+
+XXX THIS MODULE IS NOW DEPRECATED.
+
+XXX Use the Sailthru::Client module instead.
 
 =head1 SYNOPSIS
 
+ # XXX THIS MODULE IS NOW DEPRECATED.
+ # XXX Use the Sailthru::Client module instead.
  use Triggermail;
- my $tm = Triggermail->new('api_key','secret'); # You can optionally include a timeout in seconds as a third parameter.
- %vars = ( name => "Joe Example", from_email => "approved_email@your_domain.com", your_variable => "some_value");
- %options = ( reply_to => "your reply_to header");
- $tm->send("template_name",'example@example.com',\%vars,\%options);
+ # You can optionally include a timeout in seconds as a third parameter.
+ my $tm = Triggermail->new( 'api_key', 'secret' );
+ %vars = (
+     name          => "Joe Example",
+     from_email    => "approved_email@your_domain.com",
+     your_variable => "some_value"
+ );
+ %options = ( reply_to => "your reply_to header" );
+ $tm->send( "template_name", 'example@example.com', \%vars, \%options );
 
 =head1 DESCRIPTION
+
+XXX THIS MODULE IS NOW DEPRECATED.
+
+XXX Use the Sailthru::Client module instead.
 
 Triggermail is a Perl module for accesing the Sailthru platform.
 
