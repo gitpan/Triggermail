@@ -1,5 +1,5 @@
 {
-   "abstract" : "Perl module for accessing SailThru's platform",
+   "abstract" : "Perl module for accessing Sailthru's platform",
    "author" : [
       "Sam Gerstenzang <sgerstenzang@stanford.edu>"
    ],
@@ -43,5 +43,5 @@
       }
    },
    "release_status" : "stable",
-   "version" : "1.004"
+   "version" : "1.005"
 }

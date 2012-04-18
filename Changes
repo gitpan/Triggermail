@@ -1,5 +1,8 @@
 Revision history for Perl extension Triggermail.
 
+1.005 Wed Apr 18 11:12:38 2012
+	- Add deprecation warning in code.
+
 1.004 Tue Apr 17 12:36:37 2012
 	- Deprecation warning in documentation to prefer Sailthru::Client.
 

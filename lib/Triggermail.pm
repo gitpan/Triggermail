@@ -1,18 +1,19 @@
 package Triggermail;
 
-our $VERSION = '1.004';
-
 use strict;
 use warnings;
 
+our $VERSION = '1.005';
+
 use constant API_URI => 'https://api.sailthru.com';
 
-use Digest::MD5 qw(md5_hex);
-use JSON::XS;
 use LWP;
-use HTTP::Request;
+use JSON::XS;
 use URI::Escape;
-use Params::Validate qw(:all);
+use HTTP::Request;
+use Digest::MD5 qw( md5_hex);
+use Params::Validate qw( :all );
+use warnings::register;
 
 sub new {
 	my $class = shift;
@@ -21,7 +22,7 @@ sub new {
 		secret  => shift,
 		timeout => shift,
 	};
-
+	warnings::warnif( 'deprecated', 'The module Triggermail is now deprecated. Use Sailthru::Client instead.' );
 	return bless $self, $class;
 }
 
@@ -124,10 +125,10 @@ sub copyTemplate {
 		schedule_time => $schedule_time,
 		list          => $list,
 	);
-
 	# $self->_flatten_hash( 'options', $options, \%data ) if $options;
 	if ($options) {
-		my %merged_hash = ( %data, %{$options} );    #merge in the options hash
+		# merge in the options hash
+		my %merged_hash = ( %data, %{$options} );
 		%data = %merged_hash;
 	}
 	return $self->_apiCall( 'blast', \%data, 'POST' );
@@ -154,9 +155,7 @@ sub importContacts {
 
 sub _apiCall {
 	validate_pos( @_, { type => HASHREF }, { type => SCALAR }, { type => HASHREF }, { type => SCALAR } );
-
 	my ( $self, $action, $data, $method ) = @_;
-
 	$data->{'api_key'} = $self->{api_key};
 	$data->{'format'}  = 'json';
 	$data->{'sig'}     = $self->_getSignatureHash($data);
@@ -169,7 +168,6 @@ sub _apiCall {
 
 sub _httpRequest {
 	validate_pos( @_, { type => HASHREF }, { type => SCALAR }, { type => HASHREF }, { type => SCALAR } );
-
 	my ( $self, $url, $data, $method ) = @_;
 	my $browser = LWP::UserAgent->new;
 	$browser->timeout( $self->{timeout} ) if $self->{timeout};
@@ -183,19 +181,14 @@ sub _httpRequest {
 		$url->query_form( %{$data} );
 		$response = $browser->get($url);
 	}
-
-# don't die on based on status code: other sailthru clients don't
-#    die "$url error: ", $response->status_line
-#      unless $response->is_success;
-
 	if ($response) {
 		return $response;
 	}
+	return;
 }
 
 sub _getSignatureHash {
 	validate_pos( @_, { type => HASHREF }, { type => HASHREF } );
-
 	my ( $self, $params ) = @_;
 	my @values;
 	$self->_extractValues( $params, \@values );
@@ -216,6 +209,7 @@ sub _flatten_hash {
 			$mother_hash->{ $name . "[" . $key . "]" } = $value;
 		}
 	}
+	return;
 }
 
 sub _extractValues {
@@ -229,6 +223,7 @@ sub _extractValues {
 			push @{$array}, $value;
 		}
 	}
+	return;
 }
 
 1;
@@ -236,20 +231,12 @@ __END__
 
 =head1 NAME
 
-XXX THIS MODULE IS NOW DEPRECATED.
+Triggermail - Perl module for accessing Sailthru's platform
 
-XXX Use the Sailthru::Client module instead.
-
-Triggermail - Perl module for accessing SailThru's platform
-
-XXX THIS MODULE IS NOW DEPRECATED.
-
-XXX Use the Sailthru::Client module instead.
+XXX THIS MODULE IS NOW DEPRECATED. Use Sailthru::Client instead.
 
 =head1 SYNOPSIS
 
- # XXX THIS MODULE IS NOW DEPRECATED.
- # XXX Use the Sailthru::Client module instead.
  use Triggermail;
  # You can optionally include a timeout in seconds as a third parameter.
  my $tm = Triggermail->new( 'api_key', 'secret' );
@@ -263,23 +250,21 @@ XXX Use the Sailthru::Client module instead.
 
 =head1 DESCRIPTION
 
-XXX THIS MODULE IS NOW DEPRECATED.
+Triggermail is a Perl module for accessing the Sailthru platform.
 
-XXX Use the Sailthru::Client module instead.
+XXX THIS MODULE IS NOW DEPRECATED. Use Sailthru::Client instead.
 
-Triggermail is a Perl module for accesing the Sailthru platform.
-
-All methods return a hash with return values. Dump the hash or explore the SailThru API documentation page for what might be returned.
+All methods return a hash with return values. Dump the hash or explore the Sailthru API documentation page for what might be returned.
 
 L<http://docs.sailthru.com/api>
 
-Some options might change. Always consult the SailThru API documentation for the best information.
+Some options might change. Always consult the Sailthru API documentation for the best information.
 
 =head2 METHODS
 
 =over 4
 
-=item C<getEmail( $email, )>
+=item C<getEmail( $email )>
 
 =item C<setEmail( $email, \%vars, \%lists, \%templates )>
 
@@ -323,7 +308,7 @@ L<http://docs.sailthru.com/api/blast>
 Check if blast worked, using blast_id returned in the hash from scheduleBlast()
 Takes blast_id.
 
-=item C<copyTemplate( $template_name, $data_feed, $setup, $subject_line, $schedule_time, $list )>
+=item C<copyTemplate( $template_name, $data_feed, $setup, $subject_line, $schedule_time, $list, \%options )>
 
 Allows you to use an existing template to send out a blast.
 
@@ -338,10 +323,9 @@ Takes email, password as strings. By default does not include names. Pass 1 as t
 
 =back
 
-
 =head1 SEE ALSO
 
-See the SailThru API documentation for more details on their API.
+See the Sailthru API documentation for more details on their API.
 
 L<http://docs.sailthru.com/api>
 

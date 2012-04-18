@@ -1,5 +1,5 @@
 ---
-abstract: "Perl module for accessing SailThru's platform"
+abstract: "Perl module for accessing Sailthru's platform"
 author:
   - 'Sam Gerstenzang <sgerstenzang@stanford.edu>'
 build_requires:
@@ -25,4 +25,4 @@ requires:
   LWP::Protocol::https: 0
   Params::Validate: 0
   URI::Escape: 0
-version: 1.004
+version: 1.005
